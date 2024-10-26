@@ -1,0 +1,17 @@
+---
+- name: Copy index.html to the host
+  copy:
+    src: index.html
+    dest: /usr/share/nginx/html/index.html
+    mode: '0644'
+
+- name: Copy docker-compose.yml to the host
+  copy:
+    src: docker-compose.yml
+    dest: /home/galinas/ansible-project/docker-compose.yml  # Заменете с актуалния път
+    mode: '0644'
+
+- name: Start Nginx using docker-compose
+  command: docker-compose up -d
+  args:
+    chdir: /home/galinas/ansible-project  # Заменете с актуалния път
