@@ -1,0 +1,27 @@
+name: Ansible Validate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Ansible
+      run: |
+        sudo apt update
+        sudo apt install -y software-properties-common
+        sudo add-apt-repository --yes --update ppa:ansible/ansible
+        sudo apt install -y ansible
+
+    - name: Validate Ansible roles
+      run: |
+        ansible-lint roles/install_docker
+        ansible-lint roles/run_nginx_website
